@@ -16,11 +16,7 @@ func New(filePath string, defaults map[string]interface{}) (*Joneva, error) {
 
 	file, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
-		if os.IsPermission(err) {
-			if file, err = os.OpenFile(filePath, os.O_RDONLY, 0); err != nil {
-				return nil, err
-			}
-		} else {
+		if file, err = os.OpenFile(filePath, os.O_RDONLY, 0); err != nil {
 			return nil, err
 		}
 	}
