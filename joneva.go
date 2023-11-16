@@ -21,15 +21,8 @@ func New(filePath string, defaults map[string]interface{}) (*Joneva, error) {
 		}
 	}
 
-	fi, err := file.Stat()
-	if err != nil {
-		return nil, err
-	}
-
-	if fi.Size() == 0 {
-		if _, err = file.WriteString("{}"); err != nil {
-			return nil, err
-		}
+	if fi, err := file.Stat(); err == nil && fi.Size() == 0 {
+		file.WriteString("{}")
 	}
 
 	joneva := Joneva{

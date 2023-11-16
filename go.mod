@@ -1,3 +1,3 @@
 module github.com/nexcode/joneva
 
-go 1.17
+go 1.21.1
