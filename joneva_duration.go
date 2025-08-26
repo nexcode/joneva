@@ -5,9 +5,9 @@ import (
 	"time"
 )
 
-// Duration получает значение ключа как time.Duration.
-// Поддерживает стандартные форматы Go: "300ms", "1.5h", "2h45m", "30s", "5m" и т.д.
-// Также поддерживает числа как наносекунды.
+// Duration gets the key value as time.Duration.
+// Supports standard Go formats: "300ms", "1.5h", "2h45m", "30s", "5m", etc.
+// Also supports numbers like nanoseconds.
 func (j *Joneva) Duration(key string) (time.Duration, error) {
 	valueInterface := j.Get(key)
 	if valueInterface == nil {
@@ -18,14 +18,13 @@ func (j *Joneva) Duration(key string) (time.Duration, error) {
 	case string:
 		return time.ParseDuration(v)
 	case float64:
-		// Числа интерпретируются как наносекунды
 		return time.Duration(v), nil
 	default:
 		return 0, fmt.Errorf("%v: %w", key, ErrTypeMismatch)
 	}
 }
 
-// MustDuration получает значение ключа как time.Duration или паникует при ошибке.
+// MustDuration gets the key value as time.Duration or panics on error.
 func (j *Joneva) MustDuration(key string) time.Duration {
 	duration, err := j.Duration(key)
 	if err != nil {
@@ -34,7 +33,7 @@ func (j *Joneva) MustDuration(key string) time.Duration {
 	return duration
 }
 
-// SetDuration устанавливает значение ключа как время в виде строки.
+// SetDuration sets the value of a key as a duration in string format.
 func (j *Joneva) SetDuration(key string, value time.Duration) {
 	j.Set(key, value.String())
 }
